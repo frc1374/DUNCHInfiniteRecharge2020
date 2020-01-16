@@ -8,8 +8,17 @@ public class OI {
     private static final XboxController Operator = new XboxController(1);
 
     // driver
-    public static double getDriverSpeed() { return Driver.getTriggerAxis(Hand.kLeft) - Driver.getTriggerAxis(Hand.kRight); }
-    public static double getSteer() { return Driver.getX(Hand.kLeft); }
+    public static double getDriverSpeed() {
+        double triggerDiff = Driver.getTriggerAxis(Hand.kLeft) - Driver.getTriggerAxis(Hand.kRight);
+        if (triggerDiff > 0.15 || triggerDiff < -0.15) return triggerDiff;
+        else return 0.0;
+    }
+    public static double getSteer() {
+        double joystick = Driver.getX(Hand.kLeft);
+        if (joystick > 0.15 || joystick < -0.15) return joystick;
+        else return 0.0;
+
+    }
     //public static boolean getGyro() { return Driver.getXButton(); }
     //public static boolean getAlignment() { return Driver.getYButton(); }
     public static boolean getGearUp() { return Driver.getBButton(); }
