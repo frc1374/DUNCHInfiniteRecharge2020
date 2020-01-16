@@ -20,7 +20,7 @@ public class DriveCommand extends Command {
   @Override
   protected void execute() {
     Robot.DriveSubsystem.arcadeDrive(OI.getDriverSpeed(), OI.getSteer());
-    Robot.DriveSubsystem.shiftGear(OI.getGearUp(), OI.getGearDown());
+    //Robot.DriveSubsystem.shiftGear(OI.getGearUp(), OI.getGearDown());
   }
 
   // Make this return true when this Command no longer needs to run execute()
