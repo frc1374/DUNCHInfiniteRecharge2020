@@ -19,7 +19,10 @@ public class DriveCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.DriveSubsystem.arcadeDrive(OI.getDriverSpeed(), OI.getSteer());
+    if (Robot.x > 1) Robot.DriveSubsystem.arcadeDrive(0, 0.1);
+    else if (Robot.x < -1) Robot.DriveSubsystem.arcadeDrive(0, -0.1);
+    else Robot.DriveSubsystem.arcadeDrive(-0.1, 0);
+    // else Robot.DriveSubsystem.arcadeDrive(OI.getDriverSpeed(), OI.getSteer());
     //Robot.DriveSubsystem.shiftGear(OI.getGearUp(), OI.getGearDown());
   }
 
