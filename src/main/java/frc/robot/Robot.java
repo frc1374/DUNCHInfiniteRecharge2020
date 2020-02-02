@@ -21,6 +21,8 @@ import frc.robot.commands.*;
 public class Robot extends TimedRobot {
   public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
   Command DriveCommand = new DriveCommand();
+  public static final ShooterSubsystem ShooterSubsystem = new ShooterSubsystem();
+  Command ShooterCommand = new ShooterCommand();
 
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
@@ -33,7 +35,7 @@ public class Robot extends TimedRobot {
   NetworkTableEntry ta = table.getEntry("ta");
   NetworkTableEntry pipeline = table.getEntry("pipeline");
   //pipeline.setNumber(1);
-
+  public static double y;
   public static double x;
   public static double pipe;
   /**
@@ -59,7 +61,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     //read values periodically
     x = tx.getDouble(0.0);
-    double y = ty.getDouble(0.0);
+    y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
     pipe = pipeline.getDouble(0.0);
 
@@ -110,6 +112,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     DriveCommand.start();
+    ShooterCommand.start();
   }
 
   /**
