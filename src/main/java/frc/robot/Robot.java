@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
   //pipeline.setNumber(1);
 
   public static double x;
-
+  public static double pipe;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
     x = tx.getDouble(0.0);
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
+    pipe = pipeline.getDouble(0.0);
 
     //post to smart dashboard periodically
     SmartDashboard.putNumber("LimelightX", x);
