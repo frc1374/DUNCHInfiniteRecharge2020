@@ -26,8 +26,8 @@ public class Robot extends TimedRobot {
 
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  Command autonomousCommand;
+  private final SendableChooser<String> chooser = new SendableChooser<>();
 
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
@@ -37,6 +37,7 @@ public class Robot extends TimedRobot {
   //pipeline.setNumber(1);
   public static double y;
   public static double x;
+  public static double area;
   public static double pipe;
   /**
    * This function is run when the robot is first started up and should be
@@ -44,9 +45,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    chooser.setDefaultOption("AutonomousDriveStraight", "AutonomousDriveStraight");
+    //m_chooser.addOption("My Auto", kCustomAuto);
+    SmartDashboard.putData("Auto choices", chooser);
   }
 
   /**
@@ -62,7 +63,7 @@ public class Robot extends TimedRobot {
     //read values periodically
     x = tx.getDouble(0.0);
     y = ty.getDouble(0.0);
-    double area = ta.getDouble(0.0);
+    area = ta.getDouble(0.0);
     pipe = pipeline.getDouble(0.0);
 
     //post to smart dashboard periodically
@@ -84,9 +85,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
+    autonomousCommand = new AutonomousDriveStraight();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
+    System.out.println("Auto selected: " + autonomousCommand);
+    if (autonomousCommand != null) autonomousCommand.start();
   }
 
   /**
@@ -94,15 +96,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
+    Scheduler.getInstance().run();
   }
 
   /**

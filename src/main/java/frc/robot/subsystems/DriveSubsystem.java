@@ -1,9 +1,10 @@
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -20,13 +21,28 @@ public class DriveSubsystem extends Subsystem {
   public CANEncoder righte = right1.getEncoder();
   public CANEncoder lefte =  left1.getEncoder();
   AHRS Gyro = new AHRS(SPI.Port.kMXP);
+	//Encoder Distance Constants
+  public static final double wheelDiameter = 6;
+  public static final double pulsePerRevolution = 4096;
+  public static final double encoderGearRatio = 1;
+  public static final double gearRatio = (60/13)/(54/20);
+  public static final double Fudgefactor = 1.0; 
 
+  public final double distanceperpulse = Math.PI*wheelDiameter/pulsePerRevolution /encoderGearRatio/gearRatio * Fudgefactor;
+
+  
+
+  
   @Override
   public void initDefaultCommand() {
-    lefte.setPositionConversionFactor(4906);
-    righte.setPositionConversionFactor(4906);
     // Set the default command for a subsystem here.
+    lefte.setPosition(0);
+    righte.setPosition(0);
     // setDefaultCommand(new MySpecialCommand());
+    lefte.setInverted(false);
+    righte.setInverted(true);
+    righte.setPositionConversionFactor(distanceperpulse);
+    lefte.setPositionConversionFactor(distanceperpulse);
   }
 
   public void tankDrive (double left, double right) {

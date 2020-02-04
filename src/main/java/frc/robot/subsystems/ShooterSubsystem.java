@@ -40,9 +40,13 @@ public class ShooterSubsystem extends Subsystem {
     public void actuallyFire(){
         double multiplyer = 1.0;
         double distance = 82.5/Math.tan(Math.toRadians(Robot.y));
+        int max = 1;
+        int min = 0;
         double speedForDistance = distance*multiplyer;
+        double speedNorm = (max-min)/(max-min)*(speedForDistance-max)+max;
+
         if(aimed){
-            shoot1.set(speedForDistance);
+            shoot1.set(speedNorm);
         }
         else{//this can be set to aim, or if drivers feel they are actually aimed just lob it
             shootAim();

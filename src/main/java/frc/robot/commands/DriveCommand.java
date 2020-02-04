@@ -19,13 +19,15 @@ public class DriveCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.DriveSubsystem.lefte.setPosition(0);
+    Robot.DriveSubsystem.righte.setPosition(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     double encoderOutput = Robot.DriveSubsystem.righte.getPosition();
-    System.out.println(encoderOutput);
+    //System.out.println(encoderOutput);
     Robot.DriveSubsystem.arcadeDrive(OI.getDriverSpeed(), OI.getSteer());
     if(OI.light() && flag){//chris the toggle god made this
       flag = false;
