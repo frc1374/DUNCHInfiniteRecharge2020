@@ -23,7 +23,8 @@ public class Robot extends TimedRobot {
   Command DriveCommand = new DriveCommand();
   public static final ShooterSubsystem ShooterSubsystem = new ShooterSubsystem();
   Command ShooterCommand = new ShooterCommand();
-
+  Command WaterWheelCommand = new WaterWheelCommand();
+  public static final WaterWheelSubsystem WaterWheelSubsystem = new WaterWheelSubsystem();
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   Command autonomousCommand;
@@ -107,6 +108,7 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     DriveCommand.start();
     ShooterCommand.start();
+    WaterWheelCommand.start();
   }
 
   /**

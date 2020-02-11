@@ -24,7 +24,7 @@ public class OI {
     public static boolean light(){return Driver.getAButton();}
     public static boolean getGearUp() { return Driver.getBButton(); }
     public static boolean getGearDown() { return Driver.getAButton(); }
-
+    public static int getBallState = 0;
     // operator
 
     /*                      Controls
