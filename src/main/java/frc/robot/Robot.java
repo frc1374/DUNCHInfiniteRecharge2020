@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    //TODO: reset initial pos
     chooser.setDefaultOption("AutonomousDriveStraight", "AutonomousDriveStraight");
     //m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", chooser);

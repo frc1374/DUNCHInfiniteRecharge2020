@@ -6,19 +6,21 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import java.lang.Math; 
+import java.lang.Math;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 public class ShooterSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    public CANSparkMax shoot1 = new CANSparkMax(RobotMap.shoot1, MotorType.kBrushless);
-    public CANEncoder shoote = shoot1.getEncoder();
+
+    TalonFX Shoot = new TalonFX(8);
     public boolean aimed = false;
 
     @Override
     public void initDefaultCommand() {
 
-        shoote.setPositionConversionFactor(4906);
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
@@ -37,6 +39,9 @@ public class ShooterSubsystem extends Subsystem {
         // else if (Robot.x < -1) Robot.DriveSubsystem.arcadeDrive(0, -0.1);
         // else Robot.DriveSubsystem.arcadeDrive(-0.1, 0);
     }
+    public void tempFire(double speed){
+        Shoot.set(ControlMode.PercentOutput, speed*.5);
+    }
     public void actuallyFire(){
         double multiplyer = 1.0;
         double distance = 82.5/Math.tan(Math.toRadians(Robot.y));
@@ -46,7 +51,6 @@ public class ShooterSubsystem extends Subsystem {
         double speedNorm = (max-min)/(max-min)*(speedForDistance-max)+max;
 
         if(aimed){
-            shoot1.set(speedNorm);
         }
         else{//this can be set to aim, or if drivers feel they are actually aimed just lob it
             shootAim();
