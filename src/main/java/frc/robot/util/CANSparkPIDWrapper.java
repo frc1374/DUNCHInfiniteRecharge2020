@@ -11,7 +11,7 @@ public class CANSparkPIDWrapper {
     // Spark Max motor controller connected via a CAN bus
     CANSparkMax SparkMax;
     // Encoder that will be read off the SparkMax
-    CANEncoder Encoder;
+    public CANEncoder Encoder;
     // PID Controller that will be read off the SparkMax
     CANPIDController PIDController;
 

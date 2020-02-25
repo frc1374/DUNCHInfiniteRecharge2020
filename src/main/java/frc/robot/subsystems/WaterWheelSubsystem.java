@@ -10,6 +10,9 @@ import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator.Validity
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 /**
  * Add your docs here.
  */
@@ -18,6 +21,9 @@ public class WaterWheelSubsystem extends Subsystem {
   CANSparkPIDWrapper Wheel;
   public DoubleSolenoid ski = new DoubleSolenoid(0, 7);//forward is closed, and reverse is open
   public DoubleSolenoid spin =  new DoubleSolenoid(1,6);
+  TalonFX intakeClose = new TalonFX(9);
+  TalonFX intakeFar = new TalonFX(10);
+
 
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
@@ -80,7 +86,26 @@ public class WaterWheelSubsystem extends Subsystem {
     //    Wheel.setPercentOutput(.5);
     //  }
   }
+  public void closeIntakeSpin(double speed){
+    intakeClose.set(ControlMode.PercentOutput, speed);
 
+  }
+  public void farIntakeSpin(double speed){
+    intakeFar.set(ControlMode.PercentOutput, speed);
+
+  }
+  public boolean Zero(){
+    wheelTurnTo = getPos() + (((4096.0 * 36.0) / (22.0 / 18.0)) * 2);
+    if(checkBall()){
+      wheelTurnTo = getPos();
+      Wheel.Encoder.setPosition(0);
+      return true;
+    }
+    else{
+      return false;
+    }
+    
+  }
   public boolean checkBall() {
     return !ballDetect.get();
   }
