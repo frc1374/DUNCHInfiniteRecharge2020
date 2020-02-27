@@ -6,36 +6,25 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
 
-public class DriveCommand extends Command {
+public class IntakeCommand extends Command {
 
-  boolean flag = false;
 
-  public DriveCommand() {
+  public IntakeCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.DriveSubsystem);
+    requires(Robot.IntakeSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.DriveSubsystem.lefte.setPosition(0);
-    Robot.DriveSubsystem.righte.setPosition(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double encoderOutput = Robot.DriveSubsystem.righte.getPosition();
-    //System.out.println(encoderOutput);
-    Robot.DriveSubsystem.arcadeDrive(OI.getDriverSpeed(), OI.getSteer());
-    
-    
-    //if (Robot.x > 1) Robot.DriveSubsystem.arcadeDrive(0, 0.1);
-    //else if (Robot.x < -1) Robot.DriveSubsystem.arcadeDrive(0, -0.1);
-    //else Robot.DriveSubsystem.arcadeDrive(-0.1, 0);
-    // else Robot.DriveSubsystem.arcadeDrive(OI.getDriverSpeed(), OI.getSteer());
-    //Robot.DriveSubsystem.shiftGear(OI.getGearUp(), OI.getGearDown());
+    Robot.IntakeSubsystem.closeIntakeSpin(OI.getOperatorSpeed());
+    //put in here
   }
 
   // Make this return true when this Command no longer needs to run execute()

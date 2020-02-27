@@ -1,16 +1,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-
-import org.graalvm.compiler.code.DataSection.ZeroData;
-
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.WaterWheelSubsystem;
 
 public class WaterWheelCommand extends Command {
   boolean setZeroed = false;
@@ -37,29 +31,29 @@ public class WaterWheelCommand extends Command {
   protected void initialize() {
     Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos();
     Robot.WaterWheelSubsystem.waterWheelSki(Value.kReverse);
-    Robot.WaterWheelSubsystem.waterWheelSpin(Value.kForward);
+    Robot.WaterWheelSubsystem.waterWheelSpin(Value.kReverse);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
     // System.out.println(Robot.WaterWheelSubsystem.checkSpeed());
     if (OI.shoot() && flagshoot) {
       flagshootv2 = false;
-      Robot.WaterWheelSubsystem.closeIntakeSpin(-1);
-      Robot.WaterWheelSubsystem.farIntakeSpin(-1);
+      //Robot.IntakeSubsystem.closeIntakeSpin(1.0);
+      Robot.IntakeSubsystem.closeIntakeSpin(1);
       Robot.ShooterSubsystem.tempFire(1);
       Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos()
           + (((4096.0 * 36.0) / (22.0 / 18.0)) * 4);
       Robot.WaterWheelSubsystem.waterWheelSki(Value.kForward);
       Robot.WaterWheelSubsystem.waterWheelSpin(Value.kReverse);
-      if (Robot.WaterWheelSubsystem.checkSpeed() < 2000) {
+      /*if (Robot.WaterWheelSubsystem.checkSpeed() < 2000) {
         Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos();
         Robot.WaterWheelSubsystem.waterWheelSki(Value.kReverse);
         Robot.WaterWheelSubsystem.waterWheelSpin(Value.kReverse);
         flagshoot = false;
-      }
-
+      }*/
     } else if (!OI.shoot() && !flagshootv2) {
       flagshoot = true;
       flagshootv2 = true;
@@ -67,26 +61,28 @@ public class WaterWheelCommand extends Command {
     }
 
     if (OI.index() && flagindex) {
+      flagindex = false;
       readytoindex = !readytoindex;
     } else if (!OI.index()) {
       flagindex = true;
     }
-    if (readytoindex) {
-      Robot.WaterWheelSubsystem.closeIntakeSpin(.5);
-      Robot.WaterWheelSubsystem.farIntakeSpin(.5);
-    } else if (readytoindex && !ballSensor1.get()
-        && Robot.WaterWheelSubsystem.getPos() == Robot.WaterWheelSubsystem.wheelTurnTo) {
+    if (readytoindex && Robot.WaterWheelSubsystem.checkBall()&& Math.abs(Robot.WaterWheelSubsystem.wheelTurnTo - Robot.WaterWheelSubsystem.getPos() )<= 300) {
+      Robot.IntakeSubsystem.closeIntakeSpin(-1);
+      System.out.println("intake big time baby");
       ballCount++;
-      Robot.WaterWheelSubsystem.waterWheelSpin(Value.kForward);
+      //Robot.WaterWheelSubsystem.waterWheelSpin(Value.kForward);
       Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos()
-          + ((((4096.0 * 36.0) / (22.0 / 18.0)) * 2) / 5);
-    } else {
-      Robot.WaterWheelSubsystem.closeIntakeSpin(0);
-      Robot.WaterWheelSubsystem.farIntakeSpin(0);
+          + ((((4096.0 * 36.0) / (22.0 / 18.0)) * 2.0) / 5.1);
+    }
+    else if (readytoindex) {
+      Robot.IntakeSubsystem.closeIntakeSpin(-.2);
+    }  else if(!OI.shoot()){
+      Robot.IntakeSubsystem.closeIntakeSpin(0);
+      //Robot.WaterWheelSubsystem.farIntakeSpin(0);
     }
     Robot.WaterWheelSubsystem.index(OI.getSpinManual());
 
-    if(OI.indexf()){
+  /*  if(OI.indexf()){
       setZeroed = true;
     }
     if(setZeroed){
@@ -94,7 +90,7 @@ public class WaterWheelCommand extends Command {
       if(Robot.WaterWheelSubsystem.Zero()){
         setZeroed = false;
       }
-    }
+    }*/
     if (OI.ski() && flagski) {// chris the toggle god made this
       System.out.println("skibool");
       flagski = false;

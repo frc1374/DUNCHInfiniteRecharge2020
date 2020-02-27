@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import java.lang.Math;
+import frc.robot.util.CANSparkPIDWrapper;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -14,13 +15,16 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 public class ShooterSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+    CANSparkPIDWrapper Turret;
     TalonFX Shoot = new TalonFX(8);
+    TalonFX Shoot2 = new TalonFX(12);
     public boolean aimed = false;
 
     @Override
     public void initDefaultCommand() {
-
+        Turret=new CANSparkPIDWrapper(11,1);//turret is 133t, 18t on motor, 36/1 gearbox
+        Turret.setPIDValues(2, 0, 5, 0, 4096);
+        Turret.setPIDOutputRange(-.3, .3);
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
@@ -40,11 +44,18 @@ public class ShooterSubsystem extends Subsystem {
         // else Robot.DriveSubsystem.arcadeDrive(-0.1, 0);
     }
     public void tempFire(double speed){
-        Shoot.set(ControlMode.PercentOutput, speed*.5);
+        Shoot.set(ControlMode.PercentOutput, speed);
+        Shoot2.set(ControlMode.PercentOutput, speed);
+    }
+    public void aim(double speed){
+        Turret.setPercentOutput(speed);
+    }
+    public double findDistance(){
+        return (82.5-29)/Math.tan(Math.toRadians(Robot.y));
     }
     public void actuallyFire(){
         double multiplyer = 1.0;
-        double distance = 82.5/Math.tan(Math.toRadians(Robot.y));
+        double distance = (82.5-29)/Math.tan(Math.toRadians(Robot.y));
         int max = 1;
         int min = 0;
         double speedForDistance = distance*multiplyer;

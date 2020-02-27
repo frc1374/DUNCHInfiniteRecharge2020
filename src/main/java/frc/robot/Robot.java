@@ -24,6 +24,10 @@ public class Robot extends TimedRobot {
   public static final ShooterSubsystem ShooterSubsystem = new ShooterSubsystem();
   Command ShooterCommand = new ShooterCommand();
   Command WaterWheelCommand = new WaterWheelCommand();
+  Command IntakeCommand =  new IntakeCommand();
+  public static final IntakeSubsystem IntakeSubsystem = new IntakeSubsystem();
+  Command ClimberCommand =  new ClimberCommand();
+  public static final ClimberSubsystem ClimberSubsystem = new ClimberSubsystem();
   public static final WaterWheelSubsystem WaterWheelSubsystem = new WaterWheelSubsystem();
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";

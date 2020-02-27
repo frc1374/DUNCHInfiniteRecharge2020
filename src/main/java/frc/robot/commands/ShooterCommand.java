@@ -7,7 +7,8 @@ import frc.robot.OI;
 import frc.robot.Robot;
 
 public class ShooterCommand extends Command {
-
+  boolean flag =false;
+  boolean manualSwap = false;
 
   public ShooterCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -24,6 +25,38 @@ public class ShooterCommand extends Command {
   @Override
   protected void execute() {
     Robot.ShooterSubsystem.tempFire(OI.getShootManual());
+    if(Math.abs(OI.getOperatorSpeed()) >=.15){
+      double speed = OI.getOperatorSpeed() *.1;
+      Robot.ShooterSubsystem.aim(speed);
+    }
+    else{
+      Robot.ShooterSubsystem.aim(0);
+    }
+    if(OI.AIM()){
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
+      if(Math.abs(Robot.x) >.2){
+        Robot.ShooterSubsystem.aim(Robot.x/360);
+      }
+      
+    }
+    else{
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+    }
+    System.out.println(Robot.ShooterSubsystem.findDistance());
+    if((OI.light() && flag)||manualSwap){//chris the toggle god made this
+      flag = false;
+      manualSwap = false;
+      if( Robot.pipe == 1.0){
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
+      }
+      else {
+        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+      }
+    }
+    else if(!OI.light()){
+      flag = true;
+    }
+
     //put in here
   }
 

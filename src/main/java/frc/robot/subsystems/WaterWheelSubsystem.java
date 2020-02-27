@@ -19,10 +19,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 public class WaterWheelSubsystem extends Subsystem {
 
   CANSparkPIDWrapper Wheel;
+  public Compressor c = new Compressor(0);  
   public DoubleSolenoid ski = new DoubleSolenoid(0, 7);//forward is closed, and reverse is open
   public DoubleSolenoid spin =  new DoubleSolenoid(1,6);
-  TalonFX intakeClose = new TalonFX(9);
-  TalonFX intakeFar = new TalonFX(10);
+  //TalonFX intakeFar = new TalonFX(10);
 
 
   // Put methods for controlling this subsystem
@@ -36,10 +36,10 @@ public class WaterWheelSubsystem extends Subsystem {
   public boolean skibool,spinbool;
   @Override
   public void initDefaultCommand() {
-    Wheel=new CANSparkPIDWrapper(7,1);
+    Wheel=new CANSparkPIDWrapper(7,0);
     Wheel.setPIDValues(2, 0, 5, 0, 4096);
     //Wheel.setPIDValues(2.1, .6 ,3.4, 0, 1); 
-    Wheel.setPIDOutputRange(-1, 1);
+    Wheel.setPIDOutputRange(-.2, .2);
     skibool = false;
     spinbool = false;
     
@@ -47,6 +47,9 @@ public class WaterWheelSubsystem extends Subsystem {
     // Set the default comm and for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
     wheelTurnTo = Wheel.getPosition();
+  }
+  public void CompressorControl(){
+    c.setClosedLoopControl(true);    
   }
   public double getPos(){
     return Wheel.getPosition();
@@ -61,7 +64,7 @@ public class WaterWheelSubsystem extends Subsystem {
   public void index(double speed) {
     //System.out.println(Wheel.getVelocity());//5800 aprox max velocity
     //Wheel.setPercentOutput(-speed);
-    System.out.println(wheelTurnTo);
+    //System.out.println(wheelTurnTo);
     if(OI.getSpinManual() <= .15&&OI.getSpinManual() >= -.15){
       if (Math.abs(wheelTurnTo - Wheel.getPosition() )>= 300) {
         //System.out.println("at " + Wheel.getPosition());
@@ -86,14 +89,8 @@ public class WaterWheelSubsystem extends Subsystem {
     //    Wheel.setPercentOutput(.5);
     //  }
   }
-  public void closeIntakeSpin(double speed){
-    intakeClose.set(ControlMode.PercentOutput, speed);
 
-  }
-  public void farIntakeSpin(double speed){
-    intakeFar.set(ControlMode.PercentOutput, speed);
 
-  }
   public boolean Zero(){
     wheelTurnTo = getPos() + (((4096.0 * 36.0) / (22.0 / 18.0)) * 2);
     if(checkBall()){
