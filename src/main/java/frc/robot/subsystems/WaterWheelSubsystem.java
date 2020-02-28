@@ -21,7 +21,6 @@ public class WaterWheelSubsystem extends Subsystem {
   CANSparkPIDWrapper Wheel;
   public Compressor c = new Compressor(0);  
   public DoubleSolenoid ski = new DoubleSolenoid(0, 7);//forward is closed, and reverse is open
-  public DoubleSolenoid spin =  new DoubleSolenoid(1,6);
   //TalonFX intakeFar = new TalonFX(10);
 
 
@@ -57,10 +56,7 @@ public class WaterWheelSubsystem extends Subsystem {
   public void waterWheelSki(Value activate){
       ski.set(activate);
   }
-  public void waterWheelSpin(Value activate){
-      spin.set(activate);
-   
-  }
+
   public void index(double speed) {
     //System.out.println(Wheel.getVelocity());//5800 aprox max velocity
     //Wheel.setPercentOutput(-speed);

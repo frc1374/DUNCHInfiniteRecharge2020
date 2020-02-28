@@ -34,7 +34,7 @@ public class ShooterCommand extends Command {
     }
     if(OI.AIM()){
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
-      if(Math.abs(Robot.x) >.2){
+      if(Math.abs(Robot.x) >1){
         Robot.ShooterSubsystem.aim(Robot.x/360);
       }
       

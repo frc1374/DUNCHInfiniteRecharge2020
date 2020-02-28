@@ -28,7 +28,7 @@ public class ClimberCommand extends Command {
     @Override
     protected void execute() {
         double currentTime = time.getMatchTime();
-        if(currentTime >=120){
+        if(currentTime >=0){
             if(OI.climbUp()){//a to go up
                 Robot.ClimberSubsystem.goUp(.7);//change this to a negative if its the wrong way, its -1 to 1
             }

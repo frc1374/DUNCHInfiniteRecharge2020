@@ -31,7 +31,6 @@ public class WaterWheelCommand extends Command {
   protected void initialize() {
     Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos();
     Robot.WaterWheelSubsystem.waterWheelSki(Value.kReverse);
-    Robot.WaterWheelSubsystem.waterWheelSpin(Value.kReverse);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -47,7 +46,6 @@ public class WaterWheelCommand extends Command {
       Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos()
           + (((4096.0 * 36.0) / (22.0 / 18.0)) * 4);
       Robot.WaterWheelSubsystem.waterWheelSki(Value.kForward);
-      Robot.WaterWheelSubsystem.waterWheelSpin(Value.kReverse);
       /*if (Robot.WaterWheelSubsystem.checkSpeed() < 2000) {
         Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos();
         Robot.WaterWheelSubsystem.waterWheelSki(Value.kReverse);
@@ -69,6 +67,8 @@ public class WaterWheelCommand extends Command {
     if (readytoindex && Robot.WaterWheelSubsystem.checkBall()&& Math.abs(Robot.WaterWheelSubsystem.wheelTurnTo - Robot.WaterWheelSubsystem.getPos() )<= 300) {
       Robot.IntakeSubsystem.closeIntakeSpin(-1);
       System.out.println("intake big time baby");
+      Robot.IntakeSubsystem.farIntakeSpin(-0.5);
+      Robot.IntakeSubsystem.intakeArm(Value.kForward);
       ballCount++;
       //Robot.WaterWheelSubsystem.waterWheelSpin(Value.kForward);
       Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos()
@@ -77,7 +77,9 @@ public class WaterWheelCommand extends Command {
     else if (readytoindex) {
       Robot.IntakeSubsystem.closeIntakeSpin(-.2);
     }  else if(!OI.shoot()){
+      Robot.IntakeSubsystem.intakeArm(Value.kReverse);
       Robot.IntakeSubsystem.closeIntakeSpin(0);
+      Robot.IntakeSubsystem.farIntakeSpin(0);
       //Robot.WaterWheelSubsystem.farIntakeSpin(0);
     }
     Robot.WaterWheelSubsystem.index(OI.getSpinManual());
@@ -103,17 +105,7 @@ public class WaterWheelCommand extends Command {
     } else if (!OI.ski()) {
       flagski = true;
     }
-    if (OI.spin() && flagspin) {// chris the toggle god made this
-      System.out.println("spinbool");
-      flagspin = false;
-      if (Robot.WaterWheelSubsystem.spin.get() == Value.kForward) {
-        Robot.WaterWheelSubsystem.spin.set(Value.kReverse);
-      } else {
-        Robot.WaterWheelSubsystem.spin.set(Value.kForward);
-      }
-    } else if (!OI.spin()) {
-      flagspin = true;
-    }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
