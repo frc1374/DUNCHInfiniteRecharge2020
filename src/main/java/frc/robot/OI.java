@@ -43,10 +43,10 @@ public class OI {
     public static boolean light(){return Driver.getAButton();}
     public static boolean climbDown() { return Driver.getBButton(); }
     public static boolean climbUp() { return Driver.getAButton(); }
-    public static boolean indexf(){return Operator.getYButton();}
+    public static boolean shootOne(){return Operator.getYButton();}
     public static boolean AIM(){return Operator.getBButton();}
     public static boolean ski(){return Operator.getBumperPressed(Hand.kRight);}
-    public static boolean spin(){return Operator.getBumperPressed(Hand.kLeft);}
+    public static boolean lightPiston(){return Operator.getBumperPressed(Hand.kLeft);}
     public static boolean index(){return Operator.getXButton();}
     public static boolean shoot(){return Operator.getAButton();}
     public static boolean emergencyOpen(){return Operator.getStartButton();}

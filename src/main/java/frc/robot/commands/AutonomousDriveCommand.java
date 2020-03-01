@@ -30,12 +30,13 @@ public class AutonomousDriveCommand extends Command {
     double encoderReadR = Robot.DriveSubsystem.righte.getPosition();
     double error = encoderReadL - encoderReadR*-1;
     double turn_power = .2 * error;
-    System.out.println(encoderReadL);
-    Robot.DriveSubsystem.arcadeDrive(-.25, -turn_power);
+    System.out.println(encoderReadL + "Left");
+    System.out.println(encoderReadR + "Right");
+
+    Robot.DriveSubsystem.arcadeDrive(-.25, turn_power);
     if(encoderReadL>Distance&&encoderReadR*-1 > Distance){
       //Robot.DriveSubsystem.left1.set
       Robot.DriveSubsystem.arcadeDrive(1,0);
-      System.out.println("done!!!");
       done = true;
     }
 

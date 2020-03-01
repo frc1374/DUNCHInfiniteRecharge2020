@@ -27,6 +27,7 @@ public class ClimberCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        /*
         double currentTime = time.getMatchTime();
         if(currentTime >=0){
             if(OI.climbUp()){//a to go up
@@ -35,7 +36,7 @@ public class ClimberCommand extends Command {
             if(OI.climbDown()){//b to go down
                 Robot.ClimberSubsystem.pullDown(.7);//change this to a negative if its the wrong way, its -1 to 1
             }
-        }
+        }*/
     }
 
     // Make this return true when this Command no longer needs to run execute()

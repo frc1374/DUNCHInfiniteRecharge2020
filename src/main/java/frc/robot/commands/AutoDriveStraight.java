@@ -3,18 +3,18 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 
-public class AutonomousDriveStraight extends CommandGroup {
+public class AutoDriveStraight extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public AutonomousDriveStraight() {
+  public AutoDriveStraight() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-    //addSequential(new AutonomousDriveCommand(0));
-    addSequential(new AutonomousDriveTime(.3,0,3000));//first number speed -1,1, second number turn -1,1 -1 being left, third numer time miliseconds
-    //addSequential(new AutonomousBreak(100));
+    addSequential(new AutonomousDriveCommand(39.2045));
+    addSequential(new AutonomousBreak(100));
+    addSequential(new AutonomousBallHuntCommand());
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());
