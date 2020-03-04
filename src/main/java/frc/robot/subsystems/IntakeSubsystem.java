@@ -17,32 +17,25 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 public class IntakeSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    //public DoubleSolenoid intakeArm=  new DoubleSolenoid(2,5);
+    public DoubleSolenoid intakeArm=  new DoubleSolenoid(3,5);
 
     TalonFX intakeClose = new TalonFX(9);
-    //TalonFX intakeFar = new TalonFX(14);
+    TalonFX intakeFar = new TalonFX(15);
 
     @Override
     public void initDefaultCommand() {
-        //intakeArm.set(Value.kReverse);
+        intakeArm.set(Value.kForward);
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
 
-    public void intakeArm(boolean stat){
-        if(stat){
-            //intakeArm.set(Value.kForward);
-        }
-        else{
-            //intakeArm.set(Value.kReverse);
-        }
-    }
+
 
     public void closeIntakeSpin(double speed){
         intakeClose.set(ControlMode.PercentOutput, speed);
     }
     public void farIntakeSpin(double speed){
-        //intakeFar.set(ControlMode.PercentOutput, speed);
+        intakeFar.set(ControlMode.PercentOutput, speed);
     }
 
 }

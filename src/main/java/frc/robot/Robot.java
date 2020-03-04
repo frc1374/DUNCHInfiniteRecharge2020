@@ -114,6 +114,7 @@ public class Robot extends TimedRobot {
     DriveCommand.start();
     ShooterCommand.start();
     WaterWheelCommand.start();
+    ClimberCommand.start();
   }
 
   /**

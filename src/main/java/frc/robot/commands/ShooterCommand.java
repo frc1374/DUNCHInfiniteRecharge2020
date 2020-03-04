@@ -21,7 +21,7 @@ public class ShooterCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.ShooterSubsystem.lightPiston(currentVal);
+    Robot.ShooterSubsystem.lightPiston(true);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -51,33 +51,20 @@ public class ShooterCommand extends Command {
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
 
     }
-    System.out.println(Robot.ShooterSubsystem.findDistance());
+    //System.out.println(Robot.ShooterSubsystem.findDistance());
     if(OI.lightPiston() && flag){
       flag = false;
-      if(currentVal == Value.kReverse){
-        Robot.ShooterSubsystem.lightPiston(Value.kForward);
-      }
-      else{
-        Robot.ShooterSubsystem.lightPiston(Value.kReverse);
+      if (Robot.ShooterSubsystem.lightPist.get() == Value.kForward) {
+        Robot.ShooterSubsystem.lightPist.set(Value.kReverse);
+      } else {
+        Robot.ShooterSubsystem.lightPist.set(Value.kForward);
       }
 
     }
     else if (!OI.lightPiston()){
       flag = true;
     }
-    if((OI.light() && flag)||manualSwap){//chris the toggle god made this
-      flag = false;
-      manualSwap = false;
-      if( Robot.pipe == 1.0){
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
-      }
-      else {
-        NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
-      }
-    }
-    else if(!OI.light()){
-      flag = true;
-    }
+
 
     //put in here
   }

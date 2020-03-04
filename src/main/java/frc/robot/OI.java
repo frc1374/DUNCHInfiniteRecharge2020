@@ -40,7 +40,6 @@ public class OI {
     }
     //public static boolean getGyro() { return Driver.getXButton(); }
     //public static boolean getAlignment() { return Driver.getYButton(); }
-    public static boolean light(){return Driver.getAButton();}
     public static boolean climbDown() { return Driver.getBButton(); }
     public static boolean climbUp() { return Driver.getAButton(); }
     public static boolean shootOne(){return Operator.getYButton();}

@@ -31,7 +31,7 @@ public class WaterWheelCommand extends Command {
   @Override
   protected void initialize() {
     Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos();
-    Robot.WaterWheelSubsystem.waterWheelSki(Value.kForward);
+    Robot.WaterWheelSubsystem.waterWheelSki(Value.kReverse);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -77,23 +77,25 @@ public class WaterWheelCommand extends Command {
     if (readytoindex && Robot.WaterWheelSubsystem.checkBall()&& Math.abs(Robot.WaterWheelSubsystem.wheelTurnTo - Robot.WaterWheelSubsystem.getPos() )<= 300) {
       Robot.IntakeSubsystem.closeIntakeSpin(-1);
       
-      //Robot.IntakeSubsystem.farIntakeSpin(-0.5);
       Robot.WaterWheelSubsystem.waterWheelSki(Value.kForward);
 
-      //Robot.IntakeSubsystem.intakeArm(true);
+      
       ballCount++;
       //Robot.WaterWheelSubsystem.waterWheelSpin(Value.kForward);
       Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos()
           + ((((4096.0 * 36.0) / (22.0 / 18.0)) * 2.0) / 5.1);
     }
     else if (readytoindex) {
+      Robot.IntakeSubsystem.intakeArm.set(Value.kReverse);
       Robot.ShooterSubsystem.tempFire(-.2);
       Robot.IntakeSubsystem.closeIntakeSpin(-.2);
+      Robot.IntakeSubsystem.farIntakeSpin(-0.5);
+
     }  else if(!OI.shoot()){
-      //Robot.IntakeSubsystem.intakeArm(false);
+      Robot.IntakeSubsystem.intakeArm.set(Value.kForward);;
       Robot.IntakeSubsystem.closeIntakeSpin(0);
       Robot.ShooterSubsystem.tempFire(0);//shooter fire speed
-      //Robot.IntakeSubsystem.farIntakeSpin(0);
+      Robot.IntakeSubsystem.farIntakeSpin(0);
 
     }
     Robot.WaterWheelSubsystem.index(OI.getSpinManual());
@@ -108,7 +110,6 @@ public class WaterWheelCommand extends Command {
       }
     }*/
     if (OI.ski() && flagski) {// chris the toggle god made this
-      System.out.println("skibool");
       flagski = false;
       if (Robot.WaterWheelSubsystem.ski.get() == Value.kForward) {
         Robot.WaterWheelSubsystem.ski.set(Value.kReverse);

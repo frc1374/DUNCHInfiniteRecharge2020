@@ -19,8 +19,8 @@ public class ShooterSubsystem extends Subsystem {
     // here. Call these from Commands.
     CANSparkPIDWrapper Turret;
     TalonFX Shoot = new TalonFX(8);
-    //TalonFX Shoot2 = new TalonFX(12);
-    public DoubleSolenoid intakeArm=  new DoubleSolenoid(1,6);
+    TalonFX Shoot2 = new TalonFX(14);
+    public DoubleSolenoid lightPist=  new DoubleSolenoid(2,6);
 
     public boolean aimed = false;
 
@@ -29,13 +29,14 @@ public class ShooterSubsystem extends Subsystem {
         Turret=new CANSparkPIDWrapper(11,1);//turret is 133t, 18t on motor, 36/1 gearbox
         Turret.setPIDValues(2, 0, 5, 0, 4096);
         Turret.setPIDOutputRange(-.5, .5);
+        lightPist.set(Value.kForward);
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
 
     public void tempFire(double speed){
         Shoot.set(ControlMode.PercentOutput, speed);
-        //Shoot2.set(ControlMode.PercentOutput, -speed);
+        Shoot2.set(ControlMode.PercentOutput, -speed);
     }
     public void aim(double speed){
         Turret.setPercentOutput(speed);
@@ -56,8 +57,13 @@ public class ShooterSubsystem extends Subsystem {
         else{//this can be set to aim, or if drivers feel they are actually aimed just lob it
         }
     }
-    public void lightPiston(Value state){
-        //lightPiston(state);
+    public void lightPiston(boolean state){
+        if(state){
+            lightPist.set(Value.kForward);
+        }
+        else{
+            lightPist.set(Value.kReverse);
+        }
     }
 
 }
