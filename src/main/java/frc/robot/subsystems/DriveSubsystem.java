@@ -53,7 +53,7 @@ private static double SPEED_SLEW_RATE=0.03; //0.04 change, time to rampup //0.00
   @Override
   public void initDefaultCommand() {
     //syedawase=> modified the value to 0.15 earlier it was 0.6
-    speedMultiplyer = .70;
+    speedMultiplyer = .60;
     // Set the default command for a subsystem here.
     lefte.setPosition(0);
     righte.setPosition(0);
