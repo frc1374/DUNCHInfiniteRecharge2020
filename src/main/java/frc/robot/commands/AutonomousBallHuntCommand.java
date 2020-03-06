@@ -33,6 +33,9 @@ public class AutonomousBallHuntCommand extends CommandGroup {
     Robot.ShooterSubsystem.lightPist.set(Value.kReverse);
     if(Robot.x == 0){
       Robot.ShooterSubsystem.aim(-.5);
+      if(System.currentTimeMillis() - Start > 4000){
+        done = true;
+      }
     }
     else if(Math.abs(Robot.x)<2){
       done = true;

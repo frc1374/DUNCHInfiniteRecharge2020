@@ -19,8 +19,11 @@ public class AutonomousShootCommand extends CommandGroup {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    double maxx = 25;
+    double minn = 0;
     double dist = Robot.ShooterSubsystem.findDistance();
-    double fireSpeed = 1*(dist*1);
+    double normalized = (dist-(minn*dist))/((maxx*dist)-(minn*dist));
+    double fireSpeed = normalized;
     Start = System.currentTimeMillis();
     End = System.currentTimeMillis();
     Robot.DriveSubsystem.arcadeDrive(0, 0);
@@ -70,6 +73,7 @@ public class AutonomousShootCommand extends CommandGroup {
   @Override
   protected void end() {
     Robot.WaterWheelSubsystem.waterWheelSki(Value.kForward);
+    Robot.IntakeSubsystem.intakeArm.set(Value.kForward);
 
     Robot.DriveSubsystem.arcadeDrive(0, 0);
   }
