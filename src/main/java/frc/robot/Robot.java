@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
   public static final ClimberSubsystem ClimberSubsystem = new ClimberSubsystem();
   public static final WaterWheelSubsystem WaterWheelSubsystem = new WaterWheelSubsystem();
   private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
+  private static final String kCustomAuto = "Autoshootdrive";
   Command autonomousCommand;
   private final SendableChooser<String> chooser = new SendableChooser<>();
 
@@ -51,8 +51,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     //TODO: reset initial pos
-    chooser.setDefaultOption("AutonomousDriveStraight", "AutonomousDriveStraight");
-    //m_chooser.addOption("My Auto", kCustomAuto);
+    chooser.setDefaultOption("AutoDriveStraight", "AutoDriveStraight");
+    chooser.addOption("shoot", "Autoshootdrive");
     SmartDashboard.putData("Auto choices", chooser);
   }
 
@@ -91,7 +91,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    autonomousCommand = new AutonomousDriveStraight();
+    String Selected = chooser.getSelected();
+    switch (Selected){
+      case "Autoshootdrive":
+        autonomousCommand = new Autoshootdrive();
+        break;
+      
+      case "AutoDriveStraight" :
+        autonomousCommand = new AutoDriveStraight();
+        break;
+
+    }
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + autonomousCommand);
     if (autonomousCommand != null) autonomousCommand.start();

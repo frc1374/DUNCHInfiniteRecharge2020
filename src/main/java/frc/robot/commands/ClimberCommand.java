@@ -31,7 +31,6 @@ public class ClimberCommand extends Command {
         double currentTime = time.getMatchTime();
         //if(currentTime >=0){
             if(OI.climbUp()){//a to go up
-                System.out.println("yeetus");
                 Robot.ClimberSubsystem.goUp(.7);//change this to a negative if its the wrong way, its -1 to 1
             }
             else{
@@ -39,7 +38,6 @@ public class ClimberCommand extends Command {
             }
 
             if(OI.climbDown()){//b to go down
-                System.out.println("yeetus2");
                 Robot.ClimberSubsystem.pullDown(1);//change this to a negative if its the wrong way, its -1 to 1
             } 
             else{

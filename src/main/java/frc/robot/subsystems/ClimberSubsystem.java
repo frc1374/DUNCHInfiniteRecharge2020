@@ -27,13 +27,13 @@ public class ClimberSubsystem extends Subsystem {
     }
 
     public void pullDown(double speed){
-        System.out.println("DOWNNNN");
+        //System.out.println("DOWNNNN");
 
         climber.set(ControlMode.PercentOutput, speed);
     }
     public void goUp(double speed){
         Robot.DriveSubsystem.speedMultiplyer = .4;
-        System.out.println("UPPPPPPPPP");
+        //System.out.println("UPPPPPPPPP");
         climberUp1.set(ControlMode.PercentOutput,speed);
         //climberUp2.set(ControlMode.PercentOutput,speed);
     }

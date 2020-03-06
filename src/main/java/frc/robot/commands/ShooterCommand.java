@@ -17,10 +17,10 @@ public class ShooterCommand extends Command {
     // eg. requires(chassis);
     requires(Robot.ShooterSubsystem);
   }
-
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
     Robot.ShooterSubsystem.lightPiston(true);
   }
 
@@ -39,16 +39,22 @@ public class ShooterCommand extends Command {
     }
     if(OI.AIM()){
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(0);
-
-      if(Math.abs(Robot.x) >1){
-        Robot.ShooterSubsystem.aim((Robot.x/360)*-2);
+      Robot.ShooterSubsystem.lightPist.set(Value.kReverse);
+      if(Math.abs(Robot.x)>.1){
+        Robot.ShooterSubsystem.aim((Robot.x/360)*-3);
       }
+      // else if(Robot.x >0){
+      //   Robot.ShooterSubsystem.aim(-.05);
+      // }
+      // else if(Robot.x<0){
+      //   Robot.ShooterSubsystem.aim(.05);
+      // }
+      
       
     }
     else{
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
-      NetworkTableInstance.getDefault().getTable("limelight").getEntry("camMode").setNumber(1);
+
 
     }
     //System.out.println(Robot.ShooterSubsystem.findDistance());

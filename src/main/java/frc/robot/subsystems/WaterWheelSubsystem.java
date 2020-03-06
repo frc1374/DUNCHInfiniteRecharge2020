@@ -105,6 +105,8 @@ public class WaterWheelSubsystem extends Subsystem {
   public double checkSpeed(){
     return Wheel.getVelocity();
   }
-
+  public void ManualAuto(double speed){
+    Wheel.setPercentOutput(-speed);
+  }
 
 }
