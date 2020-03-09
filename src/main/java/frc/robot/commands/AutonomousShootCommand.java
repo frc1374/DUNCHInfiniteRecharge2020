@@ -23,7 +23,7 @@ public class AutonomousShootCommand extends CommandGroup {
     double maxx = 20*12;
     double minn = 0;
     double dist = Robot.ShooterSubsystem.findDistance();
-    double normalized = (dist-(minn*dist))/((maxx*dist)-(minn*dist));
+    double normalized = (dist-(minn*dist))/((maxx*dist)-(minn*dist));//take the max and min and normalize to 0-1
     double fireSpeed = normalized;
     Start = System.currentTimeMillis();
     End = System.currentTimeMillis();

@@ -27,7 +27,6 @@ public class ClimberSubsystem extends Subsystem {
     }
 
     public void pullDown(double speed){
-        //System.out.println("DOWNNNN");
 
         climber.set(ControlMode.PercentOutput, speed);
     }
@@ -36,7 +35,6 @@ public class ClimberSubsystem extends Subsystem {
     }
     public void goUp(double speed){
         
-        //System.out.println("UPPPPPPPPP");
         climberUp1.set(ControlMode.PercentOutput,speed);
         //climberUp2.set(ControlMode.PercentOutput,speed);
     }

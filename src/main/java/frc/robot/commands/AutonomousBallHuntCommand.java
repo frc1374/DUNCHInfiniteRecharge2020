@@ -29,19 +29,19 @@ public class AutonomousBallHuntCommand extends CommandGroup {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);//keep limelight searching
     Robot.ShooterSubsystem.lightPist.set(Value.kReverse);
     if(Robot.x == 0){
-      Robot.ShooterSubsystem.aim(-.35);
-      if(System.currentTimeMillis() - Start > 2750){
+      Robot.ShooterSubsystem.aim(-.35);//turn right untill it sees something
+      if(System.currentTimeMillis() - Start > 2750){//incase it sees nothing(pneumatinc being broke)
         done = true;
       }
     }
-    else if(Math.abs(Robot.x)<2){
+    else if(Math.abs(Robot.x)<2){//if yyou are within 2degree
       done = true;
     }
     else if(Math.abs(Robot.x)>.1 && !stopAim){
-      Robot.ShooterSubsystem.aim(((Robot.x+5)/360)*-5);
+      Robot.ShooterSubsystem.aim(((Robot.x+5)/360)*-5);//turn to limlight being off tilt 5degree, turn to the center in a curve(slow as it approches as to not overshoot)
     }
 
 

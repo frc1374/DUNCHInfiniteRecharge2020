@@ -32,6 +32,16 @@ public class AutonomousDriveCommand extends Command {
     double turn_power = .2 * error;
     System.out.println(encoderReadL + "Left");
     System.out.println(encoderReadR + "Right");
+    
+/*
+ima keep it real, this is a shitty way to make the encoder drive base for the auto
+but when life is such in frc you must make weird stuff, so this works for the time untill they changed drivetrain gears
+if you want to copy this keep in mind that you wont be dead on and will have to add some sort of breaking,
+also the gyro would also probably keep you straight better
+but if you wanted to copy ask rico how to properly do pid, or look at the waterwheel if you feel up do it and have neos, 
+and try to do something similar to that
+*/
+
 
     Robot.DriveSubsystem.arcadeDrive(-.25, turn_power);
     if(encoderReadL>Distance&&encoderReadR*-1 > Distance){

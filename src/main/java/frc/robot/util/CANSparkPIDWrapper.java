@@ -5,7 +5,10 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
-
+/*
+thank god Rico made this the giga mind man
+idk how this works, but look at waterwheel subsystem, and command for a example of it implemented
+*/
 
 public class CANSparkPIDWrapper {
     // Spark Max motor controller connected via a CAN bus

@@ -41,7 +41,9 @@ public class ShooterSubsystem extends Subsystem {
     public void aim(double speed){
         Turret.setPercentOutput(speed);
     }
-    public double findDistance(){
+    public double findDistance(){//distance is found by taking the hight of the target, subtracting the hight of cam
+        //devide by the tan of the degrees you are off on y converted to radius, to solve for adjacent, and you get adjacent in inches
+        //keep in mind, the y degree needs to be PRECISE on the angle
         return (82.5-29)/Math.tan(Math.toRadians(Robot.y));
     }
     public void actuallyFire(){

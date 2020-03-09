@@ -116,7 +116,9 @@ private static double SPEED_SLEW_RATE=0.03; //0.04 change, time to rampup //0.00
 		   }
 	  }
 	  
-	  updateDrive();
+    updateDrive();//this doesent actually work there is no acceleration curve, theyve all taken placebo and think
+    //there is one, but dont use this in the future stick to regular drive
+    //they wont let me remove it thinking it does stuff
   
   }
 

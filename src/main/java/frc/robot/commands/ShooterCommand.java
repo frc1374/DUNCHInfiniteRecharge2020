@@ -42,7 +42,7 @@ public class ShooterCommand extends Command {
       Robot.ShooterSubsystem.lightPist.set(Value.kReverse);
       System.out.println(Robot.ShooterSubsystem.findDistance()+"DISTANCE");
       if(Math.abs(Robot.x)>.1){
-        Robot.ShooterSubsystem.aim(((Robot.x+2)/360)*-3);
+        Robot.ShooterSubsystem.aim(((Robot.x+2)/360)*-3);//auto aim with a curve
       }
       // else if(Robot.x >0){
       //   Robot.ShooterSubsystem.aim(-.05);

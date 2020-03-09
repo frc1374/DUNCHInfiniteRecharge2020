@@ -14,11 +14,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 /**
- * Add your docs here.
+ so you probably looking here to find out pid, well to be honest its kinda weird, and a lot is thanks to Rico for being a giga mind
+ make sure you have Ricos CanSparkMaxWrapper because he made the pid work
  */
 public class WaterWheelSubsystem extends Subsystem {
 
-  CANSparkPIDWrapper Wheel;
+  CANSparkPIDWrapper Wheel;//make a Wheel wrapper
   public Compressor c = new Compressor(0);  
   public DoubleSolenoid ski = new DoubleSolenoid(0, 7);//forward is closed, and reverse is open
   //TalonFX intakeFar = new TalonFX(10);
@@ -26,7 +27,6 @@ public class WaterWheelSubsystem extends Subsystem {
 
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  // 36/1 for wheel (36 spin of motor = 1 spin of wheel)
   DigitalInput ballDetect =  new DigitalInput(0);
   // DigitalInput ballDetect = new DigitalInput(0);
   
@@ -35,17 +35,14 @@ public class WaterWheelSubsystem extends Subsystem {
   public boolean skibool,spinbool;
   @Override
   public void initDefaultCommand() {
-    Wheel=new CANSparkPIDWrapper(7,0);
-    Wheel.setPIDValues(2, 0, 5, 0, 4096);
-    //Wheel.setPIDValues(2.1, .6 ,3.4, 0, 1); 
-    Wheel.setPIDOutputRange(-.2, .2);
+    Wheel=new CANSparkPIDWrapper(7,0);//make the proper motor and stuff
+    Wheel.setPIDValues(2, 0, 5, 0, 4096);//pid values, search up how to tune it,biggest mistake is not setting a tollerance be careful
+    //make sure that you set the last number to the ticks of the encoder
+    Wheel.setPIDOutputRange(-.2, .2);//set the max and min voltage
     skibool = false;
     spinbool = false;
     
-    // waterWheele.setPosition(0);
-    // Set the default comm and for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-    wheelTurnTo = Wheel.getPosition();
+    wheelTurnTo = Wheel.getPosition();//set the current position
   }
   public void CompressorControl(){
     c.setClosedLoopControl(true);    
@@ -58,14 +55,12 @@ public class WaterWheelSubsystem extends Subsystem {
   }
 
   public void index(double speed) {
-    //System.out.println(Wheel.getVelocity());//5800 aprox max velocity
-    //Wheel.setPercentOutput(-speed);
-    //System.out.println(wheelTurnTo);
-    if(OI.getSpinManual() <= .15&&OI.getSpinManual() >= -.15){
-      if (Math.abs(wheelTurnTo - Wheel.getPosition() )>= 300) {
-        //System.out.println("at " + Wheel.getPosition());
-        //System.out.println("going to  " + wheelTurnTo);
-        Wheel.setPIDPosition(wheelTurnTo);
+
+
+    if(OI.getSpinManual() <= .15&&OI.getSpinManual() >= -.15){//check to see if not manually turning
+      if (Math.abs(wheelTurnTo - Wheel.getPosition() )>= 300) {//this is the tollerance
+        //get the absolute difference of the two positions, and the check for tollerance level
+        Wheel.setPIDPosition(wheelTurnTo);//set the position, and wait for magic to happen
       }
       else{
         Wheel.setPercentOutput(0);
@@ -78,27 +73,10 @@ public class WaterWheelSubsystem extends Subsystem {
 
 
 
-    // if(Wheel.getPosition() > wheelTurnTo*.6){
-    //   Wheel.setPercentOutput(-.5);
-    // }
-    //  else if (Wheel.getPosition() < wheelTurnTo*.6){
-    //    Wheel.setPercentOutput(.5);
-    //  }
+
   }
 
 
-  public boolean Zero(){
-    wheelTurnTo = getPos() + (((4096.0 * 36.0) / (22.0 / 18.0)) * 2);
-    if(checkBall()){
-      wheelTurnTo = getPos();
-      Wheel.Encoder.setPosition(0);
-      return true;
-    }
-    else{
-      return false;
-    }
-    
-  }
   public boolean checkBall() {
     return !ballDetect.get();
   }
