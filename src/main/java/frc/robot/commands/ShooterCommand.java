@@ -40,8 +40,9 @@ public class ShooterCommand extends Command {
     if(OI.AIM()){
       NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
       Robot.ShooterSubsystem.lightPist.set(Value.kReverse);
+      System.out.println(Robot.ShooterSubsystem.findDistance()+"DISTANCE");
       if(Math.abs(Robot.x)>.1){
-        Robot.ShooterSubsystem.aim((Robot.x/360)*-3);
+        Robot.ShooterSubsystem.aim(((Robot.x+2)/360)*-3);
       }
       // else if(Robot.x >0){
       //   Robot.ShooterSubsystem.aim(-.05);

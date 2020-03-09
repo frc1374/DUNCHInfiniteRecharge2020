@@ -32,8 +32,8 @@ public class AutonomousBallHuntCommand extends CommandGroup {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
     Robot.ShooterSubsystem.lightPist.set(Value.kReverse);
     if(Robot.x == 0){
-      Robot.ShooterSubsystem.aim(-.5);
-      if(System.currentTimeMillis() - Start > 4000){
+      Robot.ShooterSubsystem.aim(-.35);
+      if(System.currentTimeMillis() - Start > 2750){
         done = true;
       }
     }
@@ -41,7 +41,7 @@ public class AutonomousBallHuntCommand extends CommandGroup {
       done = true;
     }
     else if(Math.abs(Robot.x)>.1 && !stopAim){
-      Robot.ShooterSubsystem.aim((Robot.x/360)*-5);
+      Robot.ShooterSubsystem.aim(((Robot.x+5)/360)*-5);
     }
 
 

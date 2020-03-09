@@ -19,7 +19,7 @@ public class ShooterSubsystem extends Subsystem {
     // here. Call these from Commands.
     CANSparkPIDWrapper Turret;
     TalonFX Shoot = new TalonFX(8);
-    TalonFX Shoot2 = new TalonFX(14);
+    //TalonFX Shoot2 = new TalonFX(14);
     public DoubleSolenoid lightPist=  new DoubleSolenoid(2,6);
 
     public boolean aimed = false;
@@ -36,7 +36,7 @@ public class ShooterSubsystem extends Subsystem {
 
     public void tempFire(double speed){
         Shoot.set(ControlMode.PercentOutput, speed);
-        Shoot2.set(ControlMode.PercentOutput, -speed);
+        //Shoot2.set(ControlMode.PercentOutput, -speed);
     }
     public void aim(double speed){
         Turret.setPercentOutput(speed);

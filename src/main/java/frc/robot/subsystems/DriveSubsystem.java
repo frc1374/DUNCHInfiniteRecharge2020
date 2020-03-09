@@ -14,14 +14,14 @@ public class DriveSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public Compressor c = new Compressor(RobotMap.compressor);
-  public CANSparkMax left1 = new CANSparkMax(RobotMap.left1, MotorType.kBrushless);
+  //public CANSparkMax left1 = new CANSparkMax(RobotMap.left1, MotorType.kBrushless);
   public CANSparkMax left2 = new CANSparkMax(RobotMap.left2, MotorType.kBrushless);
   public CANSparkMax left3 = new CANSparkMax(RobotMap.left3, MotorType.kBrushless);
   public CANSparkMax right1 = new CANSparkMax(RobotMap.right1, MotorType.kBrushless);
-  public CANSparkMax right2 = new CANSparkMax(RobotMap.right2, MotorType.kBrushless);
+  //public CANSparkMax right2 = new CANSparkMax(RobotMap.right2, MotorType.kBrushless);
   public CANSparkMax right3 = new CANSparkMax(RobotMap.right3, MotorType.kBrushless);
   public CANEncoder righte = right1.getEncoder();
-  public CANEncoder lefte =  left1.getEncoder();
+  public CANEncoder lefte =  left2.getEncoder();
   AHRS Gyro = new AHRS(SPI.Port.kMXP);
 	//Encoder Distance Constants
   public static final double wheelDiameter = 8;
@@ -53,7 +53,7 @@ private static double SPEED_SLEW_RATE=0.03; //0.04 change, time to rampup //0.00
   @Override
   public void initDefaultCommand() {
     //syedawase=> modified the value to 0.15 earlier it was 0.6
-    speedMultiplyer = .90;
+    speedMultiplyer = .7;
     // Set the default command for a subsystem here.
     lefte.setPosition(0);
     righte.setPosition(0);
@@ -64,28 +64,27 @@ private static double SPEED_SLEW_RATE=0.03; //0.04 change, time to rampup //0.00
   }
 
   public void tankDrive (double left, double right) {
-    left1.set(left);
+    //left1.set(left);
     left2.set(left);
     left3.set(left);
     right1.set(-right);
-    right2.set(-right);
+    //right2.set(-right);
     right3.set(-right);
   }
+ public void updateDrive(){
+   left2.set(leftSpeedValue);
+   left3.set(leftSpeedValue);
+   right1.set(-rightSpeedValue);
+   right3.set(-rightSpeedValue);
 
+ }
   public void arcadeDrive(double speed, double turn) {
-    turn = turn *-8;
-    speed = speed*speedMultiplyer;
+    turn = turn *-65;
+    speed = speed * speedMultiplyer;
     tankDrive(speed-turn, speed+turn);
   }
 
-  public void updateDrive(){
-    left1.set(leftSpeedValue);
-    left2.set(leftSpeedValue);
-    left3.set(leftSpeedValue);
-    right1.set(-rightSpeedValue);
-    right2.set(-rightSpeedValue);
-    right3.set(-rightSpeedValue);
-  }
+
 
   @Override
   public void periodic() {
@@ -93,32 +92,32 @@ private static double SPEED_SLEW_RATE=0.03; //0.04 change, time to rampup //0.00
 	  // The periodic method is called every loop
 	  // Take a step toward the setpoint on each 
 	  // loop through
-	  if (Math.abs(leftSpeedSetpoint - leftSpeedValue) < SPEED_SLEW_RATE) {
-		  leftSpeedValue = leftSpeedSetpoint;
-	  }
-	  else {
-		  if (leftSpeedValue < leftSpeedSetpoint) {
-			  leftSpeedValue += SPEED_SLEW_RATE;
-		  }
-		  else {
-			  leftSpeedValue -= SPEED_SLEW_RATE;
-		  }
-	  }
+	   if (Math.abs(leftSpeedSetpoint - leftSpeedValue) < SPEED_SLEW_RATE) {
+		   leftSpeedValue = leftSpeedSetpoint;
+	   }
+	   else {
+		   if (leftSpeedValue < leftSpeedSetpoint) {
+		 	  leftSpeedValue += SPEED_SLEW_RATE;
+		   }
+		   else {
+		 	  leftSpeedValue -= SPEED_SLEW_RATE;
+		   }
+	   }
 	  
-	  if (Math.abs(rightSpeedSetpoint - rightSpeedValue) < SPEED_SLEW_RATE) {
-		  rightSpeedValue = rightSpeedSetpoint;
-	  }
-	  else {
-		  if (rightSpeedValue < rightSpeedSetpoint) {
-			  rightSpeedValue += SPEED_SLEW_RATE;
-		  }
-		  else {
-			  rightSpeedValue -= SPEED_SLEW_RATE;
-		  }
+	   if (Math.abs(rightSpeedSetpoint - rightSpeedValue) < SPEED_SLEW_RATE) {
+		   rightSpeedValue = rightSpeedSetpoint;
+	   }
+	   else {
+		   if (rightSpeedValue < rightSpeedSetpoint) {
+		 	  rightSpeedValue += SPEED_SLEW_RATE;
+		   }
+		   else {
+		 	  rightSpeedValue -= SPEED_SLEW_RATE;
+		   }
 	  }
 	  
 	  updateDrive();
+  
   }
-
 
 }

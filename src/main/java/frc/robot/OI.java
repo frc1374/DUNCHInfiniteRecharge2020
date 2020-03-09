@@ -1,6 +1,8 @@
 package frc.robot;
 
 
+import java.sql.Driver;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
@@ -43,6 +45,8 @@ public class OI {
     public static boolean climbDown() { return Driver.getBButton(); }
     public static boolean climbUp() { return Driver.getAButton(); }
     public static boolean shootOne(){return Operator.getYButton();}
+    public static boolean ReturnClimb(){return Driver.getStartButton();}
+    public static boolean ReturnClimb2(){return Driver.getBackButton();}
     public static boolean AIM(){return Operator.getBButton();}
     public static boolean ski(){return Operator.getBumperPressed(Hand.kRight);}
     public static boolean lightPiston(){return Operator.getBumperPressed(Hand.kLeft);}

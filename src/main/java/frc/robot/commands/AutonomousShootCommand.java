@@ -19,7 +19,8 @@ public class AutonomousShootCommand extends CommandGroup {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    double maxx = 25;
+
+    double maxx = 20*12;
     double minn = 0;
     double dist = Robot.ShooterSubsystem.findDistance();
     double normalized = (dist-(minn*dist))/((maxx*dist)-(minn*dist));
@@ -40,6 +41,7 @@ public class AutonomousShootCommand extends CommandGroup {
     Robot.ShooterSubsystem.tempFire(1);//shooter fire speed
     Robot.IntakeSubsystem.farIntakeSpin(-1);
     if(System.currentTimeMillis() - Start > 3000){
+      Robot.WaterWheelSubsystem.ski.set(Value.kForward);
       Robot.IntakeSubsystem.intakeArm.set(Value.kReverse);
       Robot.IntakeSubsystem.closeIntakeSpin(1);
       Robot.WaterWheelSubsystem.ManualAuto(-.2);

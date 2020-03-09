@@ -51,8 +51,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     //TODO: reset initial pos
-    chooser.setDefaultOption("AutoDriveStraight", "AutoDriveStraight");
-    chooser.addOption("shoot", "Autoshootdrive");
+    chooser.setDefaultOption("Shoot", "Autoshootdrive");
+    chooser.addOption("Straight", "AutonomousDriveStraight");
     SmartDashboard.putData("Auto choices", chooser);
   }
 
@@ -97,8 +97,8 @@ public class Robot extends TimedRobot {
         autonomousCommand = new Autoshootdrive();
         break;
       
-      case "AutoDriveStraight" :
-        autonomousCommand = new AutoDriveStraight();
+      case "AutonomousDriveStraight" :
+        autonomousCommand = new AutonomousDriveStraight();
         break;
 
     }

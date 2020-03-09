@@ -31,8 +31,11 @@ public class ClimberSubsystem extends Subsystem {
 
         climber.set(ControlMode.PercentOutput, speed);
     }
+    public void Return(double speed){
+        climberUp1.set(ControlMode.PercentOutput,speed);
+    }
     public void goUp(double speed){
-        Robot.DriveSubsystem.speedMultiplyer = .4;
+        
         //System.out.println("UPPPPPPPPP");
         climberUp1.set(ControlMode.PercentOutput,speed);
         //climberUp2.set(ControlMode.PercentOutput,speed);

@@ -31,17 +31,24 @@ public class ClimberCommand extends Command {
         double currentTime = time.getMatchTime();
         //if(currentTime >=0){
             if(OI.climbUp()){//a to go up
-                Robot.ClimberSubsystem.goUp(.7);//change this to a negative if its the wrong way, its -1 to 1
+                Robot.DriveSubsystem.speedMultiplyer = .1;
+                Robot.ClimberSubsystem.pullDown(-6);//change this to a negative if its the wrong way, its -1 to 1
+            }
+            else if (OI.climbDown()){
+                Robot.ClimberSubsystem.pullDown(.6);
+            }
+            else{
+                Robot.ClimberSubsystem.pullDown(0);
+            }
+
+            if(OI.ReturnClimb()){//start to go down
+                Robot.ClimberSubsystem.goUp(1);//change this to a negative if its the wrong way, its -1 to 1
+            } 
+            else if (OI.ReturnClimb2()){
+                Robot.ClimberSubsystem.goUp(-1);
             }
             else{
                 Robot.ClimberSubsystem.goUp(0);
-            }
-
-            if(OI.climbDown()){//b to go down
-                Robot.ClimberSubsystem.pullDown(1);//change this to a negative if its the wrong way, its -1 to 1
-            } 
-            else{
-                Robot.ClimberSubsystem.pullDown(0);
             }
         //}
     }

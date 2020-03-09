@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 
 public class WaterWheelCommand extends Command {
   boolean setZeroed = false;
@@ -51,15 +54,26 @@ public class WaterWheelCommand extends Command {
       shootOneFlag = true;
     }
     if (OI.shoot() && flagshoot) {
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(1);
+      double maxx = 20*12;
+      double minn = 0;
+      double dist = Robot.ShooterSubsystem.findDistance();
+      double normalized = (dist-(minn*dist))/((maxx*dist)-(minn*dist));
+      
+      double fireSpeed = .85;
+      if(Robot.x == 0){
+        fireSpeed = 1;
+      }
       flagshootv2 = false;
       //Robot.IntakeSubsystem.closeIntakeSpin(1.0);
-      Robot.ShooterSubsystem.tempFire(1);//shooter fire speed
+      Robot.ShooterSubsystem.tempFire(fireSpeed);//shooter fire speed
       Robot.IntakeSubsystem.farIntakeSpin(-1);
-      if(time.get() - start > 3){
+      if(time.get() - start > 2){
         Robot.IntakeSubsystem.intakeArm.set(Value.kReverse);
         Robot.IntakeSubsystem.closeIntakeSpin(1);
-        Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos()
-        + ((4096.0 * 36.0)  * 4);
+        //Robot.WaterWheelSubsystem.ManualAuto(-.2);
+        Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos() +(((4096.0 * 36.0)  * 4.0)) ;
+        
       }
       
 
@@ -72,7 +86,7 @@ public class WaterWheelCommand extends Command {
       }*/
     } else if (!OI.shoot()&&!flagshootv2) {
       flagshootv2 = true;
-      
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(0);
       flagshoot = true;
       Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos();
     }
@@ -92,14 +106,14 @@ public class WaterWheelCommand extends Command {
       ballCount++;
       //Robot.WaterWheelSubsystem.waterWheelSpin(Value.kForward);
       Robot.WaterWheelSubsystem.wheelTurnTo = Robot.WaterWheelSubsystem.getPos()
-          + (((4096.0 * 36.0)  * 2.0) / 5.1);
+          + (((4096.0 * 36.0)  * 2.0) / 5.0);
     }
     else if (readytoindex) {
       Robot.IntakeSubsystem.intakeArm.set(Value.kReverse);
       Robot.WaterWheelSubsystem.ski.set(Value.kReverse);
       Robot.ShooterSubsystem.tempFire(-.2);
       Robot.IntakeSubsystem.closeIntakeSpin(-.2);
-      Robot.IntakeSubsystem.farIntakeSpin(-0.2);
+      Robot.IntakeSubsystem.farIntakeSpin(-0.15);//make positive to intake through human player, - off ground
 
     }  else if(!OI.shoot()){
       start = time.get();
